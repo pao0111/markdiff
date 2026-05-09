@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Diff Viewer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #282c34;
+            color: #abb2bf;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            padding: 1rem;
+            background-color: #21252b;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-bottom: 1px solid #181a1f;
+        }
+
+        #editor-container {
+            flex-grow: 1;
+            padding: 1rem;
+            box-sizing: border-box;
+            display: flex;
+        }
+
+        /* Override CM mergeview styles to fill container */
+        .cm-mergeView {
+            flex-grow: 1;
+            height: 100%;
+            border: 1px solid #181a1f;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .cm-mergeView .cm-editor {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>Markdown Diff</header>
+    <div id="editor-container"></div>
+    <script type="module" src="./dist/app.bundle.js"></script>
+</body>
+</html>
