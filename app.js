@@ -32,29 +32,47 @@ Some more text here.
 New line added!
 `;
 
-// Initialize the merge view
+let mergeView = null;
 let target = document.getElementById("editor-container");
 
-let mergeView = new MergeView({
-  a: {
-    doc: defaultDocA,
-    extensions: [
-      basicSetup,
-      markdown(),
-      oneDark,
-      EditorView.lineWrapping,
-      EditorState.readOnly.of(false)
-    ]
-  },
-  b: {
-    doc: defaultDocB,
-    extensions: [
-      basicSetup,
-      markdown(),
-      oneDark,
-      EditorView.lineWrapping,
-      EditorState.readOnly.of(false)
-    ]
-  },
-  parent: target
+function initMergeView(docA, docB) {
+  if (mergeView) {
+    mergeView.destroy();
+    target.innerHTML = ''; // clear the container just in case
+  }
+
+  mergeView = new MergeView({
+    a: {
+      doc: docA,
+      extensions: [
+        basicSetup,
+        markdown(),
+        oneDark,
+        EditorView.lineWrapping,
+        EditorState.readOnly.of(false)
+      ]
+    },
+    b: {
+      doc: docB,
+      extensions: [
+        basicSetup,
+        markdown(),
+        oneDark,
+        EditorView.lineWrapping,
+        EditorState.readOnly.of(false)
+      ]
+    },
+    parent: target
+  });
+}
+
+// Initialize the merge view
+initMergeView(defaultDocA, defaultDocB);
+
+document.getElementById('force-diff-btn').addEventListener('click', () => {
+  if (mergeView) {
+    const docA = mergeView.a.state.doc.toString();
+    const docB = mergeView.b.state.doc.toString();
+    initMergeView(docA, docB);
+  }
 });
