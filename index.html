@@ -29,9 +29,7 @@
             position: relative;
         }
 
-        #force-diff-btn {
-            position: absolute;
-            right: 1rem;
+        .header-btn {
             padding: 0.5rem 1rem;
             background-color: #4b5263;
             color: #ffffff;
@@ -42,7 +40,7 @@
             transition: background-color 0.2s;
         }
 
-        #force-diff-btn:hover {
+        .header-btn:hover {
             background-color: #5c6370;
         }
 
@@ -70,7 +68,11 @@
 <body>
     <header>
         Markdown Diff
-        <button id="force-diff-btn">重新比對</button>
+        <div id="btn-group" style="position: absolute; right: 1rem; display: flex; gap: 0.5rem;">
+            <button id="clear-left-btn" class="header-btn">清空左側</button>
+            <button id="clear-right-btn" class="header-btn">清空右側</button>
+            <button id="force-diff-btn" class="header-btn">重新比對</button>
+        </div>
     </header>
     <div id="editor-container"></div>
     <script type="module" src="./dist/app.bundle.js"></script>

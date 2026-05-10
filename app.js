@@ -62,6 +62,9 @@ function initMergeView(docA, docB) {
         EditorState.readOnly.of(false)
       ]
     },
+    diffConfig: {
+      scanLimit: 1e9 // High limit to ensure full precision diffs for long texts
+    },
     parent: target
   });
 }
@@ -74,5 +77,21 @@ document.getElementById('force-diff-btn').addEventListener('click', () => {
     const docA = mergeView.a.state.doc.toString();
     const docB = mergeView.b.state.doc.toString();
     initMergeView(docA, docB);
+  }
+});
+
+document.getElementById('clear-left-btn').addEventListener('click', () => {
+  if (mergeView) {
+    mergeView.a.dispatch({
+      changes: { from: 0, to: mergeView.a.state.doc.length, insert: "" }
+    });
+  }
+});
+
+document.getElementById('clear-right-btn').addEventListener('click', () => {
+  if (mergeView) {
+    mergeView.b.dispatch({
+      changes: { from: 0, to: mergeView.b.state.doc.length, insert: "" }
+    });
   }
 });
