@@ -88,6 +88,45 @@ document.getElementById('clear-left-btn').addEventListener('click', () => {
   }
 });
 
+function downloadString(text, fileType, fileName) {
+  const blob = new Blob([text], { type: fileType });
+  const a = document.createElement('a');
+  a.download = fileName;
+  a.href = URL.createObjectURL(blob);
+  a.dataset.downloadurl = [fileType, a.download, a.href].join(':');
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 1500);
+}
+
+document.getElementById('download-left-btn').addEventListener('click', () => {
+  if (mergeView) {
+    const docA = mergeView.a.state.doc.toString();
+    downloadString(docA, 'text/markdown', 'left.md');
+  }
+});
+
+document.getElementById('download-right-btn').addEventListener('click', () => {
+  if (mergeView) {
+    const docB = mergeView.b.state.doc.toString();
+    downloadString(docB, 'text/markdown', 'right.md');
+  }
+});
+
+document.getElementById('scroll-top-btn').addEventListener('click', () => {
+  if (mergeView) {
+    // Scroll both editors to the top
+    mergeView.a.dispatch({
+      effects: EditorView.scrollIntoView(0, { y: "start" })
+    });
+    mergeView.b.dispatch({
+      effects: EditorView.scrollIntoView(0, { y: "start" })
+    });
+  }
+});
+
 document.getElementById('clear-right-btn').addEventListener('click', () => {
   if (mergeView) {
     mergeView.b.dispatch({
