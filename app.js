@@ -97,8 +97,10 @@ function downloadString(text, fileType, fileName) {
   a.style.display = "none";
   document.body.appendChild(a);
   a.click();
-  document.body.removeChild(a);
-  setTimeout(function() { URL.revokeObjectURL(a.href); }, 1500);
+  setTimeout(function() {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }, 1500);
 }
 
 document.getElementById('download-left-btn').addEventListener('click', () => {
