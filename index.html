@@ -16,20 +16,24 @@
             height: 100vh;
         }
 
-        header {
+        #toolbar, #footer {
             padding: 1rem;
             background-color: #21252b;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-bottom: 1px solid #181a1f;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            position: relative;
+            flex-shrink: 0;
         }
 
-        .header-btn {
+        #toolbar {
+            border-bottom: 1px solid #181a1f;
+        }
+
+        #footer {
+            border-top: 1px solid #181a1f;
+        }
+
+        .action-btn {
             padding: 0.5rem 1rem;
             background-color: #4b5263;
             color: #ffffff;
@@ -40,7 +44,7 @@
             transition: background-color 0.2s;
         }
 
-        .header-btn:hover {
+        .action-btn:hover {
             background-color: #5c6370;
         }
 
@@ -49,6 +53,7 @@
             padding: 1rem;
             box-sizing: border-box;
             display: flex;
+            overflow: hidden;
         }
 
         /* Override CM mergeview styles to fill container */
@@ -66,15 +71,17 @@
     </style>
 </head>
 <body>
-    <header>
-        Markdown Diff
-        <div id="btn-group" style="position: absolute; right: 1rem; display: flex; gap: 0.5rem;">
-            <button id="clear-left-btn" class="header-btn">清空左側</button>
-            <button id="clear-right-btn" class="header-btn">清空右側</button>
-            <button id="force-diff-btn" class="header-btn">重新比對</button>
-        </div>
-    </header>
+    <div id="toolbar">
+        <button id="clear-left-btn" class="action-btn">清空左側</button>
+        <button id="force-diff-btn" class="action-btn">重新比對</button>
+        <button id="clear-right-btn" class="action-btn">清空右側</button>
+    </div>
     <div id="editor-container"></div>
+    <div id="footer">
+        <button id="download-left-btn" class="action-btn">下載左邊</button>
+        <button id="scroll-top-btn" class="action-btn">滾動回頂端</button>
+        <button id="download-right-btn" class="action-btn">下載右邊</button>
+    </div>
     <script type="module" src="./dist/app.bundle.js"></script>
 </body>
 </html>
