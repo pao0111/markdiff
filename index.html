@@ -96,6 +96,17 @@
             overflow: auto !important;
             min-height: 0;
         }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #abb2bf;
+        }
+
+        .checkbox-container input {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -107,6 +118,10 @@
     <div id="editor-container"></div>
     <div id="footer">
         <button id="download-left-btn" class="action-btn">下載左邊</button>
+        <div class="checkbox-container">
+            <input type="checkbox" id="sync-scroll-checkbox" checked>
+            <label for="sync-scroll-checkbox">同步捲動</label>
+        </div>
         <button id="scroll-top-btn" class="action-btn">滾動回頂端</button>
         <button id="download-right-btn" class="action-btn">下載右邊</button>
     </div>
