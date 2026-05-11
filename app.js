@@ -34,8 +34,8 @@ New line added!
 
 let mergeView = null;
 let target = document.getElementById("editor-container");
-let isSyncingLeft = false;
-let isSyncingRight = false;
+let scrollDriver = null;
+let scrollTimeout = null;
 
 function initMergeView(docA, docB) {
   if (mergeView) {
@@ -48,31 +48,23 @@ function initMergeView(docA, docB) {
       const checkbox = document.getElementById('sync-scroll-checkbox');
       if (!checkbox || !checkbox.checked || !mergeView) return;
 
-      let otherView = view === mergeView.a ? mergeView.b : mergeView.a;
+      let side = view === mergeView.a ? 'a' : 'b';
+      let otherView = side === 'a' ? mergeView.b : mergeView.a;
 
-      if (view === mergeView.a) {
-        if (!isSyncingLeft) {
-          isSyncingRight = true;
-          let maxScrollA = view.scrollDOM.scrollHeight - view.scrollDOM.clientHeight;
-          if (maxScrollA <= 0) return;
+      if (scrollDriver && scrollDriver !== side) return;
 
-          let ratio = view.scrollDOM.scrollTop / maxScrollA;
-          let maxScrollB = otherView.scrollDOM.scrollHeight - otherView.scrollDOM.clientHeight;
-          otherView.scrollDOM.scrollTop = maxScrollB * ratio;
-        }
-        isSyncingLeft = false;
-      } else {
-        if (!isSyncingRight) {
-          isSyncingLeft = true;
-          let maxScrollB = view.scrollDOM.scrollHeight - view.scrollDOM.clientHeight;
-          if (maxScrollB <= 0) return;
+      scrollDriver = side;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        scrollDriver = null;
+      }, 50);
 
-          let ratio = view.scrollDOM.scrollTop / maxScrollB;
-          let maxScrollA = otherView.scrollDOM.scrollHeight - otherView.scrollDOM.clientHeight;
-          otherView.scrollDOM.scrollTop = maxScrollA * ratio;
-        }
-        isSyncingRight = false;
-      }
+      let maxScrollCurrent = view.scrollDOM.scrollHeight - view.scrollDOM.clientHeight;
+      if (maxScrollCurrent <= 0) return;
+
+      let ratio = view.scrollDOM.scrollTop / maxScrollCurrent;
+      let maxScrollOther = otherView.scrollDOM.scrollHeight - otherView.scrollDOM.clientHeight;
+      otherView.scrollDOM.scrollTop = maxScrollOther * ratio;
     }
   });
 
